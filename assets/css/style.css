@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+    font-family: arial;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    display: block;
+    padding: 10px 50px 10px 10px;
+    margin: 10px auto;
+}
+
+.hide {
+    display: none;
+}
