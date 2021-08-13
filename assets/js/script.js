@@ -3,6 +3,7 @@ var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
+var timerEl = document.getElementById("timer");
 
 var score = 0;
 
@@ -90,6 +91,7 @@ function startQuiz() {
     currentQuestionIndex = 0;
     questionBoxEl.classList.remove("hide");
     showQuestion();
+    timer();
 };
 
 // function setNextQuestion() {
@@ -134,7 +136,7 @@ function showQuestion() {
         return false;
     }
 
-    question = questions[currentQuestionIndex].question;
+    question = shuffledQuestions[currentQuestionIndex].question;
     chA = questions[currentQuestionIndex].a;
     chB = questions[currentQuestionIndex].b;
     chC = questions[currentQuestionIndex].c;
@@ -142,26 +144,40 @@ function showQuestion() {
 
     questionEl.innerHTML = "<div>"+question+"</div>";
 
-    answerBtnEl.innerHTML += "<button class='answer-buttons btn' name='choices' value='A'>"+ chA +"</button>";
-    answerBtnEl.innerHTML += "<button class='answer-buttons btn' name='choices' value='B'>"+ chB +"</button>";
-    answerBtnEl.innerHTML += "<button class='answer-buttons btn' name='choices' value='C'>"+ chC +"</button>";
-    answerBtnEl.innerHTML += "<button class='answer-buttons btn' name='choices' value='D'>"+ chD +"</button>";
+    answerBtnEl.innerHTML += "<button onclick='checkAnswer()' class='answer-buttons btn' name='choices' value='A'>"+ chA +"</button>";
+    answerBtnEl.innerHTML += "<button onclick='checkAnswer()' class='answer-buttons btn' name='choices' value='B'>"+ chB +"</button>";
+    answerBtnEl.innerHTML += "<button onclick='checkAnswer()' class='answer-buttons btn' name='choices' value='C'>"+ chC +"</button>";
+    answerBtnEl.innerHTML += "<button onclick='checkAnswer()' class='answer-buttons btn' name='choices' value='D'>"+ chD +"</button>";
 };
 
 function checkAnswer() {
     choices = document.getElementsByName("choices");
     for (var i = 0; i < choices.length; i++) {
-        if (choices[i].selected) {
+        if (choices[i].checked) {
             choice = choices[i].value;
         }
     }
 
-    if (choice === shuffledQuestions[currentQuestionIndex].answer) {
+    if (choice == questions[currentQuestionIndex].answer) {
         score++;
+    } else {
+
     }
+
+    currentQuestionIndex++;
 
     showQuestion();
 }
+
+function timer() {
+    var timeLeft = 75;
+
+    var timeInterval = setInterval(function() {
+        timeLeft--;
+        clearInterval(timeInterval);
+    }, 1000);
+}
+
 startBtnEl.addEventListener("click", startQuiz);
 
 answerBtnEl.addEventListener("click", checkAnswer);
