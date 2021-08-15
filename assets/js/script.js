@@ -1,9 +1,12 @@
 var startBtnEl = document.getElementById("start-btn");
+var playAgainBtnEl = document.getElementById("play-again-btn");
+var enterHighScoreEl = document.getElementById("enter-high-score");
+var highScoreEl = document.getElementById("high-score");
 var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
-var timerEl = document.getElementById("timer");
+var timerEl = document.getElementById("timer", "h1");
 var scoreEl = document.getElementById("score");
 
 var score = 0;
@@ -85,11 +88,18 @@ var questions = [
     },
 ];
 
+// Create high score array
+var highScores = [];
+
 // This function will start the quiz
 function startQuiz() {
-    // Hide the start button and welcome text
+    // Hide the start/play again buttons and welcome text
+    score = "";
     startBtnEl.classList.add("hide");
     welcomeBoxEl.classList.add("hide");
+    playAgainBtnEl.classList.add("hide");
+    highScoreEl.classList.add("hide");
+    enterHighScoreEl.classList.add("hide");
     // Randomize the question order and create index so questions aren't reused
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
@@ -97,6 +107,7 @@ function startQuiz() {
     questionBoxEl.classList.remove("hide");
     // Run showQuestion function
     showQuestion();
+    // timer();
 };
 
 // This function refreshes the screen with new questions and answers
@@ -106,7 +117,7 @@ function showQuestion() {
 
     // If there are no questions left, replace question text with user's score
     if (currentQuestionIndex >= questions.length) {
-        questionEl = "<div> Your score is "+score+" !</div>";
+        endGame();
         // Break the loop
         return false;
     }
@@ -143,7 +154,7 @@ function checkAnswer(e) {
         score++;
     } else {
     // If choice =/= answer, decrease time
-        timeLeft--;
+
     };
     // Add 1 to the current question index
     currentQuestionIndex++;
@@ -153,18 +164,69 @@ function checkAnswer(e) {
 }
 
 // Timer function for countdown
-function timer() {
-    var timeLeft = 75;
+// function timer() {
+//     var seconds = 60;
+//         function secondPassed() {
+//             var minutes = Math.round((seconds - 30) / 60);
+//             var remainingSeconds = seconds % 60;
 
-    timerEl.innerHTML = timeLeft;
+//             if(remainingSeconds < 10) {
+//                 remainingSeconds = "0" + remainingSeconds;
+//             }
 
-    var countdown = setInterval(()=> {
-        timeLeft--;
-        timerEl.innerHTML = "00:$(timeLeft)";
-        if (timeLeft < 0) {
-        clearInterval(countdown);
-        }
-    }, 1000);
+//             timerEl.innerHTML = minutes + ":" +remainingSeconds;
+
+//             if(seconds == 0) {
+//                 clearInterval(countdownTimer);
+//                 timerEl.innerHTML = "Buzz Buzz";
+//             } else {
+//                 seconds--;
+//             }
+//         }
+//     var countdownTimer = setInterval("secondsPassed()", 1000);
+// }
+
+function endGame() {
+    // Score message changes depending on user's score
+    if (score > 7) {
+        questionEl.innerHTML = "<div> Great job! Your score is "+score+"!</div>";
+    } else if (score > 3 && score < 7) {
+        questionEl.innerHTML = "<div> Your score is "+score+"!</div";
+    } else if (score < 3) {
+        questionEl.innerHTML = "<div> Your score is "+score+". Better luck next time.</div>";
+    } else {
+        questionEl.innerHTML = "<div>Your score is 0. Keep trying.</div>";
+    }
+
+    // Show high score input and play again button
+    highScoreEl.classList.remove("hide");
+    enterHighScoreEl.classList.remove("hide");
+    playAgainBtnEl.classList.remove("hide");
+};
+
+function highScoreHandler() {
+    var highScoreObj = {
+        name: highScoreEl.value,
+        score: score
+    };
+};
+
+function saveHighScore() {
+    var name = highScoreEl.value;
+
+    if(name === "" || name === null) {
+        alert("Enter your name!");
+        return;
+    }
+
+    localStorage.setItem("name", name);
+    localStorage.setItem("score", score);
+
+    console.log(highScoreObj);
+
+    alert("High Score saved!");
 }
 
 startBtnEl.addEventListener("click", startQuiz);
+playAgainBtnEl.addEventListener("click", startQuiz);
+enterHighScoreEl.addEventListener("click", saveHighScore);

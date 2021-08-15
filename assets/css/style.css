@@ -32,6 +32,7 @@ header div {
 .question-box {
     display: flex;
     flex-direction: column;
+    margin: 10px;
 }
 
 .welcome, .question {
@@ -39,6 +40,10 @@ header div {
     font-size: 35px;
     text-align: center;
     padding: auto 20px;
+    margin: 10px;
+}
+
+.welcome {
     margin: 50px;
 }
 
@@ -48,13 +53,30 @@ button {
 }
 
 .btn, .answer-buttons btn {
-    background-color: blue;
-    border: 5px solid black;
+    background-color: rgb(143, 0, 143);
     color: white;
-    font-weight: bold;
-    font-size: 24px;
+    width: 400px;
+    height: 75px;
+    font-size: 30px;
+    text-align: left;
     border-radius: 15px;
     padding: 10px 30px; 
+}
+
+.play-again-btn, .start-btn, .enter-high-score {
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: rgba(143, 0 , 143, 0.7);
+}
+
+.high-score {
+    width: 700px;
+    height: 50px;
+    font-size: 30px;
+    text-align: center;
+    margin: 30px;
 }
 
 .hide {
