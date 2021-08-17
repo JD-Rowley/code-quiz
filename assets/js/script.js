@@ -6,7 +6,7 @@ var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
-var timerEl = document.getElementById("timer", "h1");
+var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
 
 var score = 0;
@@ -107,7 +107,7 @@ function startQuiz() {
     questionBoxEl.classList.remove("hide");
     // Run showQuestion function
     showQuestion();
-    // timer();
+    timer();
 };
 
 // This function refreshes the screen with new questions and answers
@@ -164,27 +164,18 @@ function checkAnswer(e) {
 }
 
 // Timer function for countdown
-// function timer() {
-//     var seconds = 60;
-//         function secondPassed() {
-//             var minutes = Math.round((seconds - 30) / 60);
-//             var remainingSeconds = seconds % 60;
+function timer() {
+    var timeLeft = 75;
 
-//             if(remainingSeconds < 10) {
-//                 remainingSeconds = "0" + remainingSeconds;
-//             }
+    var timeInterval = setInterval(function() {
+        timeLeft--;
 
-//             timerEl.innerHTML = minutes + ":" +remainingSeconds;
-
-//             if(seconds == 0) {
-//                 clearInterval(countdownTimer);
-//                 timerEl.innerHTML = "Buzz Buzz";
-//             } else {
-//                 seconds--;
-//             }
-//         }
-//     var countdownTimer = setInterval("secondsPassed()", 1000);
-// }
+        if (timeLeft = 0) {
+            timerEl.innerHTML = timeLeft;
+            clearInterval(timeInterval);
+        }
+    }, 1000)
+}
 
 function endGame() {
     // Score message changes depending on user's score
@@ -204,28 +195,44 @@ function endGame() {
     playAgainBtnEl.classList.remove("hide");
 };
 
-function highScoreHandler() {
-    var highScoreObj = {
-        name: highScoreEl.value,
-        score: score
-    };
-};
-
 function saveHighScore() {
     var name = highScoreEl.value;
 
-    if(name === "" || name === null) {
+    // Check if input is null
+    if(!name) {
         alert("Enter your name!");
-        return;
+        return false;
     }
 
-    localStorage.setItem("name", name);
-    localStorage.setItem("score", score);
+        var playerScores = JSON.parse(localStorage.getItem(name, score)) || [];
 
-    console.log(highScoreObj);
+        // Object to store name and score
+        var highScores = {
+            name: name,
+            score: score
+        };
 
-    alert("High Score saved!");
-}
+        // getElementById("high-score").reset();
+        playerScores.push(highScores);
+        console.log(highScores);
+
+        localStorage.setItem((name, score), JSON.stringify(playerScores));
+
+        alert("Score saved!");
+
+    createScoreList();
+};
+
+// Create a score list
+function createScoreList() {
+    var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    alert(playerHighScores);
+        for(i = 0; i < playerHighScores; i++) {
+            var listItemEl = document.createElement("li");
+            listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
+            list.appendChild(listItemEl);
+        }
+};
 
 startBtnEl.addEventListener("click", startQuiz);
 playAgainBtnEl.addEventListener("click", startQuiz);

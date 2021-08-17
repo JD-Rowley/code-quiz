@@ -64,7 +64,9 @@ button {
 }
 
 .play-again-btn, .start-btn, .enter-high-score {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn:hover {
