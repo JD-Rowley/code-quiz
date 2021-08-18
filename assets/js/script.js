@@ -9,6 +9,7 @@ var answerBtnEl = document.getElementById("answer-buttons");
 var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
 
+var timeLeft = 75;
 var score = 0;
 
 var question, choice, choices, chA, chB, chC, chD;
@@ -107,7 +108,7 @@ function startQuiz() {
     questionBoxEl.classList.remove("hide");
     // Run showQuestion function
     showQuestion();
-    timer();
+    quizTimer();
 };
 
 // This function refreshes the screen with new questions and answers
@@ -148,13 +149,12 @@ function checkAnswer(e) {
     // Assign variable to get element more quickly
     let choice = e.target.value;
     // Create a for loop to check choices against answers
-
     //  If choice = answer, then increase score
     if (choice === questions[currentQuestionIndex].answer) {
         score++;
     } else {
     // If choice =/= answer, decrease time
-
+        timeLeft = timeLeft - 15;
     };
     // Add 1 to the current question index
     currentQuestionIndex++;
@@ -164,35 +164,42 @@ function checkAnswer(e) {
 }
 
 // Timer function for countdown
-function timer() {
-    var timeLeft = 75;
+function quizTimer() {
+    timeLeft = 75;
 
     var timeInterval = setInterval(function() {
         timeLeft--;
 
-        if (timeLeft = 0) {
-            timerEl.innerHTML = timeLeft;
+        timerEl.textContent = "Time: " + timeLeft;
+        if (timeLeft <= 0) {
             clearInterval(timeInterval);
+            endGame();
         }
-    }, 1000)
+    }, 1000);
 }
 
 function endGame() {
     // Score message changes depending on user's score
     if (score > 7) {
         questionEl.innerHTML = "<div> Great job! Your score is "+score+"!</div>";
-    } else if (score > 3 && score < 7) {
-        questionEl.innerHTML = "<div> Your score is "+score+"!</div";
-    } else if (score < 3) {
-        questionEl.innerHTML = "<div> Your score is "+score+". Better luck next time.</div>";
+    } else if (score > 0 && score < 7) {
+        questionEl.innerHTML = "<div> Your score is "+score+"!</div>";
     } else {
         questionEl.innerHTML = "<div>Your score is 0. Keep trying.</div>";
     }
+    if (timeLeft <= 0) {
+        if(score > 0) {
+            questionEl.innerHTML = "<div>Time's up! Your score is "+score+".</div>"
+        } else {
+            questionEl.innerHTML = "<div>Time's up! Your score is 0.</div>"
+        }
+    };
 
     // Show high score input and play again button
     highScoreEl.classList.remove("hide");
     enterHighScoreEl.classList.remove("hide");
     playAgainBtnEl.classList.remove("hide");
+    answerBtnEl.classList.add("hide");
 };
 
 function saveHighScore() {
@@ -221,17 +228,37 @@ function saveHighScore() {
         alert("Score saved!");
 
     createScoreList();
+    
+    // Ask to play again, okay starts game, cancel reloads page
+    var confirmPlayAgain = confirm("Would you like to play again?")
+    if (confirmPlayAgain === true) {
+        startQuiz();
+    } else {
+        window.location.reload();
+    }
 };
 
 // Create a score list
 function createScoreList() {
     var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
-    alert(playerHighScores);
         for(i = 0; i < playerHighScores; i++) {
             var listItemEl = document.createElement("li");
             listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
             list.appendChild(listItemEl);
         }
+};
+
+function renderScoreList() {
+    // Retrieve names and scores from localStorage
+    var scores = localStorage.getItem(JSON.parse(localStorage.getItem(highScores)));
+
+    // If they are null, return early
+    if (!scores) {
+        return;
+    }
+
+    // Create list in alert window
+    alert("scores");
 };
 
 startBtnEl.addEventListener("click", startQuiz);
