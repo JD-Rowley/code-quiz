@@ -9,13 +9,14 @@
 </head>
 <body>
         <header>
-            <a href="javascript:renderScoreList(scores);">View High Scores</a>
+            <a href="javascript:renderScoreList();">View High Scores</a>
             <div id="timer" class="timer"></div>        
         </header>
     <div class="container">
         <div id="question-box" class="question-box hide">
             <div id="question" class="question">Question</div>
             <div id="answer-buttons" class="answer-buttons"></div>
+            <div id="answer-confirm" class="answer-confirm"></div>
             <input type="text" id="high-score" class="high-score" name="high-score" placeholder="Enter Name for High Score" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Name for High Score'" />
             <button type="submit" id="enter-high-score" class="enter-high-score btn">Enter High Score!</button>
             <button id="play-again-btn" class="play-again-btn btn">Play Again?</button>

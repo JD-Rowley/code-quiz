@@ -6,8 +6,10 @@ var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
+var answerConfirmEl = document.getElementById("answer-confirm");
 var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
+var choices = document.getElementsByName("choices");
 
 var timeLeft = 75;
 var score = 0;
@@ -90,12 +92,13 @@ var questions = [
 ];
 
 // Create high score array
-var highScores = [];
+var scoresArr = [];
 
 // This function will start the quiz
 function startQuiz() {
     // Hide the start/play again buttons and welcome text
     score = "";
+    answerConfirmEl.textContent = "";
     startBtnEl.classList.add("hide");
     welcomeBoxEl.classList.add("hide");
     playAgainBtnEl.classList.add("hide");
@@ -106,6 +109,7 @@ function startQuiz() {
     currentQuestionIndex = 0;
     // Show question box so questions appear onscreen
     questionBoxEl.classList.remove("hide");
+    answerBtnEl.classList.remove("hide");
     // Run showQuestion function
     showQuestion();
     quizTimer();
@@ -115,6 +119,7 @@ function startQuiz() {
 function showQuestion() {
     // Clear existing question and answers
     answerBtnEl.innerHTML = "";
+    answerConfirmEl.classList.remove("hide");
 
     // If there are no questions left, replace question text with user's score
     if (currentQuestionIndex >= questions.length) {
@@ -140,10 +145,6 @@ function showQuestion() {
     answerBtnEl.innerHTML += "<button class='answer-buttons btn' name='choices' value='d'>"+ chD +"</button>";
 };
 
-choices = document.getElementsByName("choices");
-answerBtnEl.addEventListener("click", checkAnswer);
-
-
 // This function will check the answer
 function checkAnswer(e) {
     // Assign variable to get element more quickly
@@ -152,9 +153,11 @@ function checkAnswer(e) {
     //  If choice = answer, then increase score
     if (choice === questions[currentQuestionIndex].answer) {
         score++;
+        answerConfirmEl.textContent = "Correct!"
     } else {
     // If choice =/= answer, decrease time
         timeLeft = timeLeft - 15;
+        answerConfirmEl.textContent = "Incorrect..."
     };
     // Add 1 to the current question index
     currentQuestionIndex++;
@@ -170,24 +173,22 @@ function quizTimer() {
     var timeInterval = setInterval(function() {
         timeLeft--;
 
-        timerEl.textContent = "Time: " + timeLeft;
-        if (timeLeft <= 0) {
+        timerEl.textContent = "Time Left: " + timeLeft;
+        if (timeLeft <= 0 || currentQuestionIndex >= questions.length) {
             clearInterval(timeInterval);
             endGame();
         }
     }, 1000);
-}
+};
 
 function endGame() {
     // Score message changes depending on user's score
     if (score > 7) {
         questionEl.innerHTML = "<div> Great job! Your score is "+score+"!</div>";
-    } else if (score > 0 && score < 7) {
+    } else if (score < 7) {
         questionEl.innerHTML = "<div> Your score is "+score+"!</div>";
-    } else {
-        questionEl.innerHTML = "<div>Your score is 0. Keep trying.</div>";
     }
-    if (timeLeft <= 0) {
+    if (timeLeft < 1) {
         if(score > 0) {
             questionEl.innerHTML = "<div>Time's up! Your score is "+score+".</div>"
         } else {
@@ -195,11 +196,12 @@ function endGame() {
         }
     };
 
-    // Show high score input and play again button
+    // Add or remove necessary elements on final page
     highScoreEl.classList.remove("hide");
     enterHighScoreEl.classList.remove("hide");
     playAgainBtnEl.classList.remove("hide");
     answerBtnEl.classList.add("hide");
+    answerConfirmEl.classList.add("hide");
 };
 
 function saveHighScore() {
@@ -221,13 +223,22 @@ function saveHighScore() {
 
         // getElementById("high-score").reset();
         playerScores.push(highScores);
-        console.log(highScores);
 
         localStorage.setItem((name, score), JSON.stringify(playerScores));
 
         alert("Score saved!");
 
-    createScoreList();
+        // Create a score list
+        function createScoreList() {
+            var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
+                for(i = 0; i < playerHighScores; i++) {
+                    var listItemEl = document.createElement("li");
+                    listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
+                    list.appendChild(listItemEl);
+                }
+
+        createScoreList();
+};
     
     // Ask to play again, okay starts game, cancel reloads page
     var confirmPlayAgain = confirm("Would you like to play again?")
@@ -238,29 +249,21 @@ function saveHighScore() {
     }
 };
 
-// Create a score list
-function createScoreList() {
-    var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
-        for(i = 0; i < playerHighScores; i++) {
-            var listItemEl = document.createElement("li");
-            listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
-            list.appendChild(listItemEl);
-        }
-};
 
 function renderScoreList() {
     // Retrieve names and scores from localStorage
-    var scores = localStorage.getItem(JSON.parse(localStorage.getItem(highScores)));
-
+    var scores = JSON.parse(localStorage.getItem("highscores"))
+    console.log(scores);
     // If they are null, return early
     if (!scores) {
-        return;
+        alert("No scores registered");
     }
 
     // Create list in alert window
-    alert("scores");
+    questionEl.innerHTML = "<div>'+scores+'</div>";
 };
 
+answerBtnEl.addEventListener("click", checkAnswer);
 startBtnEl.addEventListener("click", startQuiz);
 playAgainBtnEl.addEventListener("click", startQuiz);
 enterHighScoreEl.addEventListener("click", saveHighScore);

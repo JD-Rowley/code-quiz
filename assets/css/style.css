@@ -63,6 +63,13 @@ button {
     padding: 10px 30px; 
 }
 
+.answer-confirm {
+    color: rgb(179, 179, 179);
+    font-size: 36px;
+    font-style: italic;
+    border-bottom: 3px solid rgb(179, 179, 179);
+}
+
 .play-again-btn, .start-btn, .enter-high-score {
     display: flex;
     justify-content: center;
