@@ -253,11 +253,13 @@ function saveHighScore() {
 function renderScoreList() {
     // Retrieve names and scores from localStorage
     var scores = JSON.parse(localStorage.getItem("highScores"));
-    // Put scores in alert window
-    alert(JSON.stringify(scores));
     // If they are null, return early
-    if (!scores) {
+    if (!scores || null) {
         alert("No scores registered");
+        return;
+    } else {
+    // List scores in alert window
+        alert(JSON.stringify(scores));
     }
 };
 
