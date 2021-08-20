@@ -185,7 +185,7 @@ function endGame() {
     // Score message changes depending on user's score
     if (score > 7) {
         questionEl.innerHTML = "<div> Great job! Your score is "+score+"!</div>";
-    } else if (score < 7) {
+    } else if (score <= 7) {
         questionEl.innerHTML = "<div> Your score is "+score+"!</div>";
     }
     if (timeLeft < 1) {
@@ -213,7 +213,7 @@ function saveHighScore() {
         return false;
     }
 
-        var playerScores = JSON.parse(localStorage.getItem(name, score)) || [];
+        var playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
         // Object to store name and score
         var highScores = {
@@ -224,7 +224,7 @@ function saveHighScore() {
         // getElementById("high-score").reset();
         playerScores.push(highScores);
 
-        localStorage.setItem((name, score), JSON.stringify(playerScores));
+        localStorage.setItem(("highScores"), JSON.stringify(playerScores));
 
         alert("Score saved!");
 
@@ -252,15 +252,13 @@ function saveHighScore() {
 
 function renderScoreList() {
     // Retrieve names and scores from localStorage
-    var scores = JSON.parse(localStorage.getItem("highscores"))
-    console.log(scores);
+    var scores = JSON.parse(localStorage.getItem("highScores"));
+    // Put scores in alert window
+    alert(JSON.stringify(scores));
     // If they are null, return early
     if (!scores) {
         alert("No scores registered");
     }
-
-    // Create list in alert window
-    questionEl.innerHTML = "<div>'+scores+'</div>";
 };
 
 answerBtnEl.addEventListener("click", checkAnswer);
