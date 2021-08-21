@@ -2,7 +2,7 @@ var startBtnEl = document.getElementById("start-btn");
 var playAgainBtnEl = document.getElementById("play-again-btn");
 var enterHighScoreEl = document.getElementById("enter-high-score");
 var highScoreEl = document.getElementById("high-score");
-var getHighScoresEL = document.getElementById("high-score-wrapper");
+var getHighScoreEl = document.getElementById("high-score-wrapper");
 var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
@@ -105,7 +105,7 @@ function startQuiz() {
     playAgainBtnEl.classList.add("hide");
     highScoreEl.classList.add("hide");
     enterHighScoreEl.classList.add("hide");
-    getHighScoresEL.classList.add("hide");
+    getHighScoreEl.classList.add("hide");
     // Randomize the question order and create index so questions aren't reused
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
@@ -170,11 +170,14 @@ function checkAnswer(e) {
 
 // Timer function for countdown
 function quizTimer() {
+    // Begin timer at 75 seconds
     timeLeft = 75;
 
+    // Decrement every one second
     var timeInterval = setInterval(function() {
         timeLeft--;
 
+        // Display time left, when time reaches 0, clearInterval and end the game
         timerEl.textContent = "Time Left: " + timeLeft;
         if (timeLeft <= 0 || currentQuestionIndex >= questions.length) {
             clearInterval(timeInterval);
@@ -202,12 +205,13 @@ function endGame() {
     highScoreEl.classList.remove("hide");
     enterHighScoreEl.classList.remove("hide");
     playAgainBtnEl.classList.remove("hide");
-    getHighScoresEL.classList.remove("hide");
     answerBtnEl.classList.add("hide");
     answerConfirmEl.classList.add("hide");
+    getHighScoreEl.classList.remove("hide");
 };
 
 function saveHighScore() {
+    // Set variable for score
     var name = highScoreEl.value;
 
     // Check if input is null
@@ -216,6 +220,7 @@ function saveHighScore() {
         return false;
     }
 
+        // Variable to retrieve scores from localStorage
         var playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
         // Object to store name and score
@@ -224,34 +229,25 @@ function saveHighScore() {
             score: score
         };
 
-        // getElementById("high-score").reset();
+        // Save high scores in array
         playerScores.push(highScores);
 
+        // Save scores object in localStorage
         localStorage.setItem(("highScores"), JSON.stringify(playerScores));
 
+        // Alert player the score was saved
         alert("Score saved!");
-
-        // Create a score list
-        // function createScoreList() {
-        //     var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
-        //         for(i = 0; i < playerHighScores; i++) {
-        //             var listItemEl = document.createElement("li");
-        //             listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
-        //             list.appendChild(listItemEl);
-        //         }
-
-        // createScoreList();
-        // };
     
     // Ask to play again, okay starts game, cancel reloads page
     var confirmPlayAgain = confirm("Would you like to play again?")
     if (confirmPlayAgain === true) {
+        // Restart the quiz
         startQuiz();
     } else {
+        // Reload main quiz screen
         window.location.reload();
     }
 };
-
 
 function renderScoreList() {
     // Retrieve names and scores from localStorage
