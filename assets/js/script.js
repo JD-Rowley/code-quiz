@@ -2,6 +2,7 @@ var startBtnEl = document.getElementById("start-btn");
 var playAgainBtnEl = document.getElementById("play-again-btn");
 var enterHighScoreEl = document.getElementById("enter-high-score");
 var highScoreEl = document.getElementById("high-score");
+var getHighScoresEL = document.getElementById("high-score-wrapper");
 var welcomeBoxEl = document.getElementById("welcome");
 var questionBoxEl = document.getElementById("question-box");
 var questionEl = document.getElementById("question");
@@ -104,6 +105,7 @@ function startQuiz() {
     playAgainBtnEl.classList.add("hide");
     highScoreEl.classList.add("hide");
     enterHighScoreEl.classList.add("hide");
+    getHighScoresEL.classList.add("hide");
     // Randomize the question order and create index so questions aren't reused
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
@@ -200,6 +202,7 @@ function endGame() {
     highScoreEl.classList.remove("hide");
     enterHighScoreEl.classList.remove("hide");
     playAgainBtnEl.classList.remove("hide");
+    getHighScoresEL.classList.remove("hide");
     answerBtnEl.classList.add("hide");
     answerConfirmEl.classList.add("hide");
 };
@@ -229,16 +232,16 @@ function saveHighScore() {
         alert("Score saved!");
 
         // Create a score list
-        function createScoreList() {
-            var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
-                for(i = 0; i < playerHighScores; i++) {
-                    var listItemEl = document.createElement("li");
-                    listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
-                    list.appendChild(listItemEl);
-                }
+        // function createScoreList() {
+        //     var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
+        //         for(i = 0; i < playerHighScores; i++) {
+        //             var listItemEl = document.createElement("li");
+        //             listItemEl.textContent = playerHighScores[i].name + " - " + playerHighScores[i].score;
+        //             list.appendChild(listItemEl);
+        //         }
 
-        createScoreList();
-};
+        // createScoreList();
+        // };
     
     // Ask to play again, okay starts game, cancel reloads page
     var confirmPlayAgain = confirm("Would you like to play again?")
