@@ -2,7 +2,7 @@
 
 ## Description
 
-Here is a simple quiz about the Warcraft universe.
+Here is a simple quiz about JavaScript fundamentals.
 
 There are ten multiple choice questions, each with one correct answer. Upon selecting an answer, the user will be alerted to whether their answer was correct or incorrect and the next question will commence.
 
