@@ -12,7 +12,6 @@ body {
 
 header {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     margin: 20px;
     font-size: 24px;
@@ -52,7 +51,7 @@ button {
 .btn, .answer-buttons btn {
     background-color: rgb(143, 0, 143);
     color: white;
-    width: 400px;
+    width: 500px;
     height: 75px;
     font-size: 30px;
     text-align: left;
@@ -64,7 +63,7 @@ button {
     color: rgb(179, 179, 179);
     font-size: 36px;
     font-style: italic;
-    border-bottom: 3px solid rgb(179, 179, 179);
+    border-top: 3px solid rgb(179, 179, 179);
 }
 
 .play-again-btn, .start-btn, .enter-high-score {

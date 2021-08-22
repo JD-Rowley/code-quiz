@@ -20,80 +20,77 @@ var shuffledQuestions, currentQuestionIndex;
 
 var questions = [
     {
-        question: "On what world, does the majority of Warcraft take place?",
-        a: "Nathreza",
-        b: "Azeroth",
-        c: "Draenor",
-        d: "Kalimdor",
+        question: "String values must be encased in _____ when being assigned to variables.",
+        a: "Quotes",
+        b: "Curly brackets",
+        c: "Parentheses",
+        d: "Commas",
         answer: "b"
     },{
-        question: "Which orc is responsible for the destruction of Draenor?",
-        a: "Gul'dan",
-        b: "Thrall",
-        c: "Ner'zhul",
-        d: "Illidan",
+        question: "The condition in an if/else statement is enclosed in _____.",
+        a: "Curly brackets",
+        b: "Quotes",
+        c: "Parentheses",
+        d: "Commas",
         answer: "c"
     },{
-        question: "The guardian, Medivh, can shapeshift into what animal?",
-        a: "Clefthoof",
-        b: "Murloc",
-        c: "Horse",
-        d: "Raven",
+        question: "A(n) _____ window displays a box with a specified message and an okay button.",
+        a: "Confirm",
+        b: "Prompt",
+        c: "Greeting",
+        d: "Alert",
         answer: "d"
     },{
-        question: "This mage was schooled by the guardian, Medivh.",
-        a: "Jaina Proudmoore",
-        b: "Khadgar",
-        c: "Antonidas",
-        d: "Krasus",
+        question: "Arrays in Javascript can be used to store _____.",
+        a: "Numbers and strings",
+        b: "Other arrays",
+        c: "Booleans",
+        d: "All of the above",
+        answer: "d"
+    },{
+        question: "DOM stands for _____",
+        a: "Definition of Objects and Models",
+        b: "Document Object Model",
+        c: "Document Object Method",
+        d: "DOM isn't an acronym.",
         answer: "b"
     },{
-        question: "This human kept the orc, Thrall, in servitude as a gladiator until his escape.",
-        a: "Varian Wrynn",
-        b: "Anduin Lothar",
-        c: "Daelin Proudmoore",
-        d: "Aedelas Blackmoore",
-        answer: "d"
-    },{
-        question: "Which horde warchief destroyed the Vale of Eternal Blossoms, leading to the Siege of Orgrimmar?",
-        a: "Grommash Hellscream",
-        b: "Orgrim Doomhammer",
-        c: "Garrosh Hellscream",
-        d: "Thrall",
+        question: "Using this, JavaScript can access and change all of the elements of an HTML document.",
+        a: "APIs",
+        b: "CSS",
+        c: "DOM",
+        d: "jQuery",
         answer: "c"
     },{
-        question: "Which titan leads the Burning Crusade?",
-        a: "Sargeras",
-        b: "Archimonde",
-        c: "Illidan",
-        d: "Kil'jaeden",
+        question: "The ____ returns the first element within an HTML document that matches the specified selector.",
+        a: "querySelector()",
+        b: "return()",
+        c: "getElementById()",
+        d: "select()",
         answer: "a"
     },{
-        question: "In what area is the dwarf capital, Ironforge, located?",
-        a: "Winterspring",
-        b: "Loch Modan",
-        c: "Dun Morogh",
-        d: "Elwynn Forest",
+        question: "_____ is used to increment a count by 1 in if statements.",
+        a: "+ 1",
+        b: ".add(1)",
+        c: "i++",
+        d: "+",
         answer: "c"
     },{
-        question: "As what, was the Black Temple formerly known?",
-        a: "Hope's Light Chapel",
-        b: "Karabor",
-        c: "The Exodar",
-        d: "Naaru",
+        question: "_____ will print its contents in the Developer's Tools console.",
+        a: "window.alert()",
+        b: "console.log()",
+        c: "print()",
+        d: "document.return()",
         answer: "b"
     },{
-        question: "Who was the first death knight?",
-        a: "Arthas Menethil",
-        b: "The Lich King",
-        c: "Koltira Deathweaver",
-        d: "Teron Gorefiend",
+        question: "Items in an array are contained in _____",
+        a: "Curly brackets",
+        b: "Parentheses",
+        c: "Semi-colons",
+        d: "Square brackets",
         answer: "d"
     },
 ];
-
-// Create high score array
-var scoresArr = [];
 
 // This function will start the quiz
 function startQuiz() {
