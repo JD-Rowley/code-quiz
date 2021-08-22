@@ -1,3 +1,4 @@
+![Screenshot](https://user-images.githubusercontent.com/86571612/130372093-cdd526ef-1666-40d6-9143-c2fee428a650.jpg)
 # Code Quiz
 
 ## Description
